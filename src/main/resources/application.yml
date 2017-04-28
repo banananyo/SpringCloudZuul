@@ -1,0 +1,38 @@
+# zuul:
+#   routes:
+#     customer-service:
+#       url: http://customer-service
+spring:
+  application:
+      name: zuul-apigateway
+zuul:
+  routes:
+    customer-service: 
+      path: /customer-service/**
+      serviceId: customer-service
+    eureka-client:
+      path: /service/**
+
+eureka-client:
+  ribbon:
+    ReadTimeout: 800
+    ConnectTimeout: 250
+    OkToRetryOnAllOperations: true
+    MaxAutoRetriesNextServer: 2
+    MaxAutoRetries: 0
+
+# ribbon:
+#   eureka:
+#     enabled: false
+
+# customer-service:
+#   ribbon:
+#     listOfServers: localhost:8084,localhost:8085,localhost:8086
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
+
+server:
+  port: 8889
